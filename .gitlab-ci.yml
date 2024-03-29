@@ -1,0 +1,35 @@
+# This image provides a Node.js environment, suitable for most JavaScript projects.
+image: node:latest
+
+# Define the stages involved in the pipeline
+stages:
+  - install
+  - build
+  - test
+
+# Cache node_modules to speed up subsequent builds
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+
+build:
+  stage: build
+  script:
+    - npm run build
+  # This keeps the build artifacts for later stages or downloading
+  artifacts:
+    paths:
+      - build/
+
+test:
+  stage: test
+  script:
+    - npm test
+  # This job uses artifacts (node_modules) from the install_dependencies job
+  dependencies:
+    - install_dependencies
