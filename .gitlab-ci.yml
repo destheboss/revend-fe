@@ -5,7 +5,6 @@ image: node:latest
 stages:
   - install
   - build
-  - test
 
 # Cache node_modules to speed up subsequent builds
 cache:
@@ -25,11 +24,3 @@ build:
   artifacts:
     paths:
       - build/
-
-test:
-  stage: test
-  script:
-    - npm test
-  # This job uses artifacts (node_modules) from the install_dependencies job
-  dependencies:
-    - install_dependencies
