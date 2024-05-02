@@ -5,6 +5,7 @@ image: node:latest
 stages:
   - install
   - build
+  - docker-deploy
 
 # Cache node_modules to speed up subsequent builds
 cache:
@@ -24,3 +25,13 @@ build:
   artifacts:
     paths:
       - build/
+
+docker-deploy:
+  stage: docker-deploy
+  script:
+    - echo "Building Docker image..."
+    - docker build -t revend-frontend:latest .
+    - echo "Running Docker container..."
+    - docker run --name revend-fe-container -p 3000:3000 --network revend-network -d revend-frontend:latest
+  only:
+    - main
