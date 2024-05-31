@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from '../hooks/useForm';
 import { userService } from '../services/userService';
+import { useNavigate } from 'react-router-dom';
 import styles from '../components/RegisterPage.module.css';
 
 const RegisterPage: React.FC = () => {
@@ -11,6 +12,8 @@ const RegisterPage: React.FC = () => {
     password: '',
     confirmPassword: ''
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +32,7 @@ const RegisterPage: React.FC = () => {
     try {
       const response = await userService.register(userData);
       console.log('User created', response.data);
+      navigate('/login');
     } catch (error) {
       console.error('There was an error creating the user', error);
     }
