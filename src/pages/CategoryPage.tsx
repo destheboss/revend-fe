@@ -32,7 +32,7 @@ const CategoryPage: React.FC = () => {
         };
 
         fetchListings();
-    }, [category]);
+    }, [category, maxPrice]);
 
     const handleFilter = async () => {
         if (!category || maxPrice === '') {
@@ -75,8 +75,9 @@ const CategoryPage: React.FC = () => {
                     type="number"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(e.target.value === '' ? '' : Number(e.target.value))}
+                    data-testid="max-price-input"
                 />
-                <Button variant="contained" onClick={handleFilter}>Filter</Button>
+                <Button variant="contained" onClick={handleFilter} data-testid="filter-button">Filter</Button>
             </Box>
             <Grid container spacing={2}>
                 {listings.map((listing) => (
